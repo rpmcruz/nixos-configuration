@@ -1,39 +1,31 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
+let
+  home-manager = builtins.fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
+    sha256 = "0q3lv288xlzxczh6lc5lcw0zj9qskvjw3pzsrgvdh8rl8ibyq75s";
+  };
+in
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [
       /etc/nixos/hardware-configuration.nix
+      "${home-manager}/nixos"
     ];
 
-  # Bootloader.
+  ######################################### LOW-LEVEL STUFF #########################################
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "gaivota"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  # rpcruz: I needed to add this line to fix networkmanager-l2tp
+  # fix networkmanager-l2tp
   services.strongswan.enable = true;  # for IPsec
   environment.etc."strongswan.conf".text = "";
 
-  # Set your time zone.
   time.timeZone = "Europe/Lisbon";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "pt_PT.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pt_PT.UTF-8";
     LC_IDENTIFICATION = "pt_PT.UTF-8";
@@ -46,26 +38,20 @@
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "pt";
     variant = "";
   };
-
-  # Configure console keymap
   console.keyMap = "pt-latin1";
 
-  # Enable CUPS to print documents.
+  # print
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # sound
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -73,71 +59,95 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  ######################################### USERS #########################################
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rpcruz = {
     isNormalUser = true;
     description = "Ricardo Cruz";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  home-manager.users.rpcruz = { pkgs, ... }: {
+    home.stateVersion = "25.05";
+    home.packages = with pkgs.gnomeExtensions; [
+      forge
+      dash-to-panel
+      clipboard-indicator
+    ];
+    dconf = {
+      settings = {
+        "org/gnome/shell" = {
+          disable-user-extensions = false;
+          enabled-extensions = with pkgs.gnomeExtensions; [
+            forge.extensionUuid
+            dash-to-panel.extensionUuid
+            clipboard-indicator.extensionUuid
+          ];
+          favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
+        };
+        "org/gnome/shell/extensions/dash-to-panel" = {
+          panel-anchors=''{"BOE-0x00000000":"MIDDLE"}'';
+          panel-element-positions=''{"BOE-0x00000000":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"dateMenu","visible":true,"position":"centered"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'';
+          panel-lengths=''{"BOE-0x00000000":100}'';
+          panel-positions=''{"BOE-0x00000000":"TOP"}'';
+          panel-sizes=''{"BOE-0x00000000":32}'';
+        };
+        "org/gnome/shell/extensions/forge" = {
+          window-gap-hidden-on-single = true;
+          window-gap-size-increment = 0;
+        };
+        "org/gnome/TextEditor" = {
+          highlight-current-line = true;
+          restore-session = false;
+          show-line-numbers = true;
+          spellcheck = false;
+          tab-width = 4;
+        };
+        "org/gnome/desktop/wm/keybindings" = {
+          move-to-workspace-left = ["<Shift><Super>Left"];
+          move-to-workspace-right = ["<Shift><Super>Right"];
+          switch-to-workspace-1 = ["<Control>F1"];
+          switch-to-workspace-2 = ["<Control>F2"];
+          switch-to-workspace-3 = ["<Control>F3"];
+          switch-to-workspace-4 = ["<Control>F4"];
+          switch-to-workspace-left = ["<Super>Left"];
+          switch-to-workspace-right = ["<Super>Right"];
+        };
+        "org/gnome/file-roller/listing" = {
+          list-mode = "as-folder";
+        };
+        "org/gnome/nautilus/list-view" = {
+          default-visible-columns = ["name" "date_modified"];
+        };
+        "org/gnome/nautilus/preferences" = {
+          default-folder-viewer = "list-view";
+        };
+      };
+    };
+  };
+
+  ######################################### PACKAGES #########################################
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    pkgs.ppp  # needed for L2TP to work
     google-chrome
     vscode
     libreoffice
     python3
     git
-    pkgs.ppp  # needed for L2TP to work
+    pinta
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  ######################################### MISC #########################################
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
+  services.openssh.enable = true;
+  networking.firewall.enable = false;
+  system.stateVersion = "25.05";
 }
