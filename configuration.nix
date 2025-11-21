@@ -73,6 +73,13 @@ in
 
   home-manager.users.rpcruz = { pkgs, ... }: {
     home.stateVersion = "25.05";
+    # initialize micromamba (which manages python environments)
+    programs.bash = {
+      enable = true;
+      initExtra = ''
+        eval "$(micromamba shell hook --shell bash --root-prefix $HOME/micromamba)"
+      '';
+    };
     home.packages = with pkgs.gnomeExtensions; [
       forge
       dash-to-panel
@@ -132,8 +139,8 @@ in
 
   ######################################### PACKAGES #########################################
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     pkgs.ppp  # needed for L2TP to work
@@ -143,6 +150,8 @@ in
     python3
     git
     pinta
+    gcc gfortran gnumake  # pypi packages
+    micromamba
   ];
 
   ######################################### MISC #########################################
