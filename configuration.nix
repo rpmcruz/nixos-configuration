@@ -61,6 +61,36 @@ in
     pulse.enable = true;
   };
 
+  ######################################### PACKAGES #########################################
+
+  nixpkgs.config.allowUnfree = true;
+  programs.nix-ld.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    pkgs.ppp  # needed for L2TP to work
+    google-chrome
+    vscode
+    libreoffice
+    python3
+    git
+    pinta
+    gcc gfortran gnumake  # pypi packages
+    micromamba
+  ];
+
+  ######################################### MISC #########################################
+
+  services.openssh.enable = true;
+  networking.firewall.enable = false;
+
+  system.stateVersion = "25.05";
+  system.autoUpgrade.enable = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
   ######################################### USERS #########################################
 
   users.users.rpcruz = {
@@ -80,6 +110,28 @@ in
         eval "$(micromamba shell hook --shell bash --root-prefix $HOME/micromamba)"
       '';
     };
+    # ssh
+    programs.ssh = {
+      enable = true;
+      extraConfig = ''
+        Host atlas
+          HostName atlas.fe.up.pt
+        Host compute
+          HostName compute01.atlas.fe.up.pt
+        Host rfeup
+          HostName 10.227.91.107
+        Host mia
+          HostName 10.227.246.75
+        Host mia01
+          HostName 10.227.246.73
+        Host mia02
+          HostName 10.227.246.74
+        Host deucalion
+          HostName login.deucalion.macc.fccn.pt
+          User rcruz.up
+      '';
+    };
+    # gnome stuff
     home.packages = with pkgs.gnomeExtensions; [
       forge
       dash-to-panel
@@ -136,27 +188,4 @@ in
       };
     };
   };
-
-  ######################################### PACKAGES #########################################
-
-  nixpkgs.config.allowUnfree = true;
-  programs.nix-ld.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    pkgs.ppp  # needed for L2TP to work
-    google-chrome
-    vscode
-    libreoffice
-    python3
-    git
-    pinta
-    gcc gfortran gnumake  # pypi packages
-    micromamba
-  ];
-
-  ######################################### MISC #########################################
-
-  services.openssh.enable = true;
-  networking.firewall.enable = false;
-  system.stateVersion = "25.05";
 }
