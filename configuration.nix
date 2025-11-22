@@ -110,6 +110,12 @@ in
         eval "$(micromamba shell hook --shell bash --root-prefix $HOME/micromamba)"
       '';
     };
+    # git
+    programs.git = {
+      enable = true;
+      userName = "Ricardo Cruz";
+      userEmail = "ricardo.pdm.cruz@gmail.com";
+    };
     # ssh
     programs.ssh = {
       enable = true;
@@ -149,11 +155,11 @@ in
           favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
         };
         "org/gnome/shell/extensions/dash-to-panel" = {
-          panel-anchors=''{"BOE-0x00000000":"MIDDLE"}'';
-          panel-element-positions=''{"BOE-0x00000000":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"dateMenu","visible":true,"position":"centered"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'';
-          panel-lengths=''{"BOE-0x00000000":100}'';
-          panel-positions=''{"BOE-0x00000000":"TOP"}'';
-          panel-sizes=''{"BOE-0x00000000":32}'';
+          panel-anchors = ''{"BOE-0x00000000":"MIDDLE"}'';
+          panel-element-positions = ''{"BOE-0x00000000":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'';
+          panel-lengths = ''{"BOE-0x00000000":100}'';
+          panel-positions = ''{"BOE-0x00000000":"TOP"}'';
+          panel-sizes = ''{"BOE-0x00000000":32}'';
         };
         "org/gnome/shell/extensions/forge" = {
           window-gap-hidden-on-single = true;
