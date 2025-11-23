@@ -76,6 +76,8 @@ in
     pinta
     gcc gfortran gnumake  # pypi packages
     micromamba
+    hwinfo  # I use this below to get the monitor for the extensions
+    virt-manager
   ];
 
   ######################################### MISC #########################################
@@ -143,6 +145,12 @@ in
       dash-to-panel
       clipboard-indicator
     ];
+    home.activation.dashToPanelFix = ''
+      monitorId=$(/run/current-system/sw/bin/hwinfo --monitor | grep -E "Vendor:|Serial ID:" | cut -d: -f2 | tr -d '"' | xargs | tr ' ' '-')
+      /run/current-system/sw/bin/dconf write /org/gnome/shell/extensions/dash-to-panel/panel-element-positions "'{\"$monitorId\":[{\"element\":\"showAppsButton\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"activitiesButton\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"leftBox\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"taskbar\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"dateMenu\",\"visible\":true,\"position\":\"centerMonitor\"},{\"element\":\"centerBox\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"rightBox\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"systemMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"desktopButton\",\"visible\":false,\"position\":\"stackedBR\"}]}'"
+      /run/current-system/sw/bin/dconf write /org/gnome/shell/extensions/dash-to-panel/panel-sizes "'{\"$monitorId\":32}'"
+      /run/current-system/sw/bin/dconf write /org/gnome/shell/extensions/dash-to-panel/panel-positions "'{\"$monitorId\":\"TOP\"}'"
+    '';
     dconf = {
       settings = {
         "org/gnome/shell" = {
@@ -154,13 +162,6 @@ in
           ];
           favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
         };
-        "org/gnome/shell/extensions/dash-to-panel" = {
-          panel-anchors = ''{"BOE-0x00000000":"MIDDLE"}'';
-          panel-element-positions = ''{"BOE-0x00000000":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}'';
-          panel-lengths = ''{"BOE-0x00000000":100}'';
-          panel-positions = ''{"BOE-0x00000000":"TOP"}'';
-          panel-sizes = ''{"BOE-0x00000000":32}'';
-        };
         "org/gnome/shell/extensions/forge" = {
           window-gap-hidden-on-single = true;
           window-gap-size-increment = 0;
@@ -170,7 +171,8 @@ in
           restore-session = false;
           show-line-numbers = true;
           spellcheck = false;
-          tab-width = 4;
+          tab-width = "'uint32 4'";
+          indent-style = "space";
         };
         "org/gnome/desktop/wm/keybindings" = {
           move-to-workspace-left = ["<Shift><Super>Left"];
