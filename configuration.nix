@@ -150,6 +150,9 @@ in
     ];
     dconf = {
       settings = {
+        "org/gnome/desktop/interface" = {
+          text-scaling-factor = 1.25;
+        };
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = with pkgs.gnomeExtensions; [
