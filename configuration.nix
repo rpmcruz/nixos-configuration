@@ -6,7 +6,8 @@ let
     sha256 = "0q3lv288xlzxczh6lc5lcw0zj9qskvjw3pzsrgvdh8rl8ibyq75s";
   };
   hostName = builtins.getEnv "HOSTNAME";
-  hostConfig = "/etc/nixos/hosts/${hostName}.nix";
+  hostPath = "/etc/nixos/hosts/${hostName}.nix";
+  hostConfig = if builtins.pathExists hostPath then hostPath else throw "HOSTNAME unknown: \"${hostName}\"";
 in
 {
   imports = [
@@ -76,6 +77,7 @@ in
     python3
     git
     pinta
+    transmission_4-gtk
     gcc gfortran gnumake  # pypi packages
     micromamba
   ];
