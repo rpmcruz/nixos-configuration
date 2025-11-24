@@ -67,7 +67,6 @@ in
   ######################################### PACKAGES #########################################
 
   nixpkgs.config.allowUnfree = true;
-  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     pkgs.ppp  # needed for L2TP to work
@@ -80,8 +79,23 @@ in
     gcc gfortran gnumake  # pypi packages
     micromamba
   ];
-  virtualisation.libvirtd.enable = true;
+
   programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  networking.firewall.trustedInterfaces = ["virbr0"];
+  systemd.services.libvirt-default-network = {
+    description = "Start libvirt default network";
+    after = ["libvirtd.service"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.libvirt}/bin/virsh net-start default";
+      ExecStop = "${pkgs.libvirt}/bin/virsh net-destroy default";
+      User = "root";
+    };
+  };
 
   ######################################### MISC #########################################
 
@@ -173,6 +187,9 @@ in
           spellcheck = false;
           tab-width = lib.hm.gvariant.mkUint32 4;
           indent-style = "space";
+        };
+        "org/gnome/desktop/wm/preferences" = {
+          button-layout = "appmenu:minimize,maximize,close";
         };
         "org/gnome/desktop/wm/keybindings" = {
           move-to-workspace-left = ["<Shift><Super>Left"];
