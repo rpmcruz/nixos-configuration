@@ -55,16 +55,20 @@ in
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    pkgs.ppp  # needed for L2TP to work
+    ppp  # needed for L2TP to work
     google-chrome
     vscode
     libreoffice
-    python3
     git
     pinta
     transmission_4-gtk
-    gcc gfortran gnumake  # pypi packages
+    # my python development packages
     micromamba
+    (pkgs.python313.withPackages (ps: [
+        ps.pandas
+        (if builtins.elem "nvidia" config.services.xserver.videoDrivers then ps.torchWithCuda else ps.torch)
+        ps.torchvision
+    ]))
   ];
 
   programs.virt-manager.enable = true;
@@ -114,7 +118,7 @@ in
     programs.bash = {
       enable = true;
       initExtra = ''
-        eval "$(micromamba shell hook --shell bash --root-prefix $HOME/micromamba)"
+        eval "$(micromamba shell hook --shell bash --root-prefix $HOME/.micromamba)"
       '';
     };
     # git
