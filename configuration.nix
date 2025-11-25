@@ -106,6 +106,7 @@ in
     packages = with pkgs; [
     ];
   };
+  security.sudo.wheelNeedsPassword = false;
 
   home-manager.users.rpcruz = { pkgs, lib, ... }: {
     home.stateVersion = "25.05";
