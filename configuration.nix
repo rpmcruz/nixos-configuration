@@ -30,27 +30,12 @@ in
 
   time.timeZone = "Europe/Lisbon";
   i18n.defaultLocale = "pt_PT.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_PT.UTF-8";
-    LC_IDENTIFICATION = "pt_PT.UTF-8";
-    LC_MEASUREMENT = "pt_PT.UTF-8";
-    LC_MONETARY = "pt_PT.UTF-8";
-    LC_NAME = "pt_PT.UTF-8";
-    LC_NUMERIC = "pt_PT.UTF-8";
-    LC_PAPER = "pt_PT.UTF-8";
-    LC_TELEPHONE = "pt_PT.UTF-8";
-    LC_TIME = "pt_PT.UTF-8";
-  };
+  services.xserver.xkb.layout = "pt";
+  console.keyMap = "pt-latin1";
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
-  services.xserver.xkb = {
-    layout = "pt";
-    variant = "";
-  };
-  console.keyMap = "pt-latin1";
 
   # print
   services.printing.enable = true;
@@ -196,10 +181,14 @@ in
         "org/gnome/desktop/wm/keybindings" = {
           move-to-workspace-left = ["<Shift><Super>Left"];
           move-to-workspace-right = ["<Shift><Super>Right"];
-          switch-to-workspace-1 = ["<Control>F1"];
-          switch-to-workspace-2 = ["<Control>F2"];
-          switch-to-workspace-3 = ["<Control>F3"];
-          switch-to-workspace-4 = ["<Control>F4"];
+          switch-to-workspace-1 = ["<Super>F1"];
+          switch-to-workspace-2 = ["<Super>F2"];
+          switch-to-workspace-3 = ["<Super>F3"];
+          switch-to-workspace-4 = ["<Super>F4"];
+          switch-to-workspace-5 = ["<Super>F5"];
+          switch-to-workspace-6 = ["<Super>F6"];
+          switch-to-workspace-7 = ["<Super>F7"];
+          switch-to-workspace-8 = ["<Super>F8"];
           switch-to-workspace-left = ["<Super>Left"];
           switch-to-workspace-right = ["<Super>Right"];
         };
