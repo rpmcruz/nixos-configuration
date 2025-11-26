@@ -62,13 +62,9 @@ in
     git
     pinta
     transmission_4-gtk
-    # my python development packages
+    # micromamba has more packages than nix and comes with binaries (compiling things like
+    # python313.torchWithCuda takes forever!
     micromamba
-    (pkgs.python313.withPackages (ps: [
-        ps.pandas
-        (if builtins.elem "nvidia" config.services.xserver.videoDrivers then ps.torchWithCuda else ps.torch)
-        ps.torchvision
-    ]))
   ];
 
   programs.virt-manager.enable = true;
