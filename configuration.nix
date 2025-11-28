@@ -64,6 +64,7 @@ in
     transmission_4-gtk
     # micromamba has more packages than nix and comes with binaries (compiling things like
     # python313.torchWithCuda takes forever!
+    python3
     micromamba
   ];
 
