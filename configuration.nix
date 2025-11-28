@@ -62,10 +62,9 @@ in
     git
     pinta
     transmission_4-gtk
-    # micromamba has more packages than nix and comes with binaries (compiling things like
-    # python313.torchWithCuda takes forever!
+    # Nix comes with many python packages, but pip has more packages
+    # we can just do "python3 -m venv name" and then install packages there
     python3
-    micromamba
   ];
 
   programs.virt-manager.enable = true;
@@ -111,13 +110,6 @@ in
 
   home-manager.users.rpcruz = { pkgs, lib, ... }: {
     home.stateVersion = "25.05";
-    # initialize micromamba (which manages python environments)
-    programs.bash = {
-      enable = true;
-      initExtra = ''
-        eval "$(micromamba shell hook --shell bash --root-prefix $HOME/.micromamba)"
-      '';
-    };
     # git
     programs.git = {
       enable = true;
