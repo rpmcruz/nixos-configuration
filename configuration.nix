@@ -67,19 +67,17 @@ environment.systemPackages = with pkgs; [
   transmission_4-gtk
   # Nix comes with many python packages, but pip has more packages
   # we can just do "python3 -m venv name" and then install packages there
-  cudaPackages.cudatoolkit
   python3
 ];
 
 environment.variables = {
-LD_LIBRARY_PATH = ''
-  /run/opengl-driver/lib
-  ${pkgs.lib.makeLibraryPath [
+LD_LIBRARY_PATH =
+  "/run/opengl-driver/lib:" +
+  pkgs.lib.makeLibraryPath [
     pkgs.stdenv.cc.cc.lib
     pkgs.zlib
     pkgs.cudaPackages.cudatoolkit
-  ]}
-  '';
+  ];
 };
 
 programs.virt-manager.enable = true;
