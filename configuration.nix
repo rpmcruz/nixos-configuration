@@ -23,8 +23,12 @@ boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
 
 networking.hostName = hostName;
-networking.networkmanager.enable = true;
-
+networking.networkmanager = {
+  enable = true;
+  plugins = with pkgs; [
+    pkgs.networkmanager-l2tp
+  ];
+};
 # fix networkmanager-l2tp
 services.strongswan.enable = true;  # for IPsec
 environment.etc."strongswan.conf".text = "";
@@ -59,7 +63,6 @@ nix.gc.automatic = true;
 nixpkgs.config.allowUnfree = true;
 environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
-  networkmanager-l2tp
   google-chrome
   vscode
   libreoffice
