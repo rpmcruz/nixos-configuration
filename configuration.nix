@@ -142,6 +142,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     };
   };
   # gnome stuff
+  # to make forge working, you may need to edit .local/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json and add a new "shell-version"
   home.packages = with pkgs.gnomeExtensions; [
     forge
     dash-to-panel
