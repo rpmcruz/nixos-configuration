@@ -2,14 +2,15 @@
 
 let
 home-manager = builtins.fetchTarball {
-  url = "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
-  sha256 = "07pk5m6mxi666dclaxdwf7xrinifv01vvgxn49bjr8rsbh31syaq";
+  url = "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 };
 hostName = builtins.getEnv "HOSTNAME";
 hostPath = "/etc/nixos/hosts/${hostName}.nix";
 hostConfig = if builtins.pathExists hostPath then hostPath else throw "Not found \"${hostPath}\" for HOSTNAME=\"${hostName}\"";
 in
 {
+system.stateVersion = "25.05";
+
 imports = [
   /etc/nixos/hardware-configuration.nix
   "${home-manager}/nixos"
@@ -34,8 +35,8 @@ services.xserver.xkb.layout = "pt";
 console.keyMap = "pt-latin1";
 
 services.xserver.enable = true;
-services.xserver.displayManager.gdm.enable = true;
-services.xserver.desktopManager.gnome.enable = true;
+services.displayManager.gdm.enable = true;
+services.desktopManager.gnome.enable = true;
 
 # print
 services.printing.enable = true;
@@ -52,13 +53,13 @@ services.pipewire = {
 
 ############################# PACKAGES #############################
 
-system.stateVersion = "25.05";
 system.autoUpgrade.enable = true;
 nix.gc.automatic = true;
 
 nixpkgs.config.allowUnfree = true;
 environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
+  networkmanager-l2tp
   google-chrome
   vscode
   libreoffice
@@ -118,29 +119,24 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
   # git
   programs.git = {
     enable = true;
-    userName = "Ricardo Cruz";
-    userEmail = "ricardo.pdm.cruz@gmail.com";
+    settings.user = {
+      name = "Ricardo Cruz";
+      email = "ricardo.pdm.cruz@gmail.com";
+    };
   };
   # ssh
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      Host atlas
-        HostName atlas.fe.up.pt
-      Host compute
-        HostName compute01.atlas.fe.up.pt
-      Host rfeup
-        HostName 10.227.91.107
-      Host mia
-        HostName 10.227.246.75
-      Host mia01
-        HostName 10.227.246.73
-      Host mia02
-        HostName 10.227.246.74
-      Host deucalion
-        HostName login.deucalion.macc.fccn.pt
-        User rcruz.up
-    '';
+    enableDefaultConfig = false;
+    matchBlocks = {
+      atlas = { hostname = "atlas.fe.up.pt"; };
+      compute = { hostname = "compute01.atlas.fe.up.pt"; };
+      rfeup = { hostname = "10.227.91.107"; };
+      mia = { hostname = "10.227.246.75"; };
+      mia01 = { hostname = "10.227.246.73"; };
+      mia02 = { hostname = "10.227.246.74"; };
+      deucalion = { hostname = "login.deucalion.macc.fccn.pt"; user = "rcruz.up"; };
+    };
   };
   # gnome stuff
   home.packages = with pkgs.gnomeExtensions; [
