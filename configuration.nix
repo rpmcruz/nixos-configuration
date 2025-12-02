@@ -73,6 +73,7 @@ environment.systemPackages = with pkgs; [
   # we can just do "python3 -m venv name" and then install packages there
   python3
 ];
+services.flatpak.enable = true;
 
 environment.variables = {
 LD_LIBRARY_PATH =
