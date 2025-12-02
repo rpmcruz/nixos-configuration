@@ -26,7 +26,7 @@ networking.hostName = hostName;
 networking.networkmanager = {
   enable = true;
   plugins = with pkgs; [
-    pkgs.networkmanager-l2tp
+    networkmanager-l2tp
   ];
 };
 # fix networkmanager-l2tp
