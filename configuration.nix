@@ -37,6 +37,10 @@ time.timeZone = "Europe/Lisbon";
 i18n.defaultLocale = "pt_PT.UTF-8";
 services.xserver.xkb.layout = "pt";
 console.keyMap = "pt-latin1";
+i18n.inputMethod = {
+  enable = true;  # required for keyboard accents to work
+  type = "ibus";
+};
 
 services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
