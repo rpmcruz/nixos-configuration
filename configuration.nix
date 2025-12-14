@@ -73,6 +73,7 @@ environment.systemPackages = with pkgs; [
   git
   pinta
   transmission_4-gtk
+  texliveSmall gummi
   # Nix comes with many python packages, but pip has more packages
   # we can just do "python3 -m venv name" and then install packages there
   python3
