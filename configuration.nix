@@ -84,6 +84,7 @@ environment.variables = {
 LD_LIBRARY_PATH =
   "/run/opengl-driver/lib:" +
   pkgs.lib.makeLibraryPath [
+    # for pytorch
     pkgs.stdenv.cc.cc.lib
     pkgs.zlib
     pkgs.cudaPackages.cudatoolkit
