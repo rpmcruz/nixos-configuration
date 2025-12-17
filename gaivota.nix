@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
 
 imports = [ ./base.nix ];
 networking.hostName = "gaivota";
 
-environment.systemPackages = with pkgs; [
+environment.systemPackages = lib.mkAfter (with pkgs; [
   steam
-];
+]);
 
 services.xserver.videoDrivers = [ "nvidia" ];
 hardware.nvidia = {
