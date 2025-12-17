@@ -4,9 +4,6 @@ let
 home-manager = builtins.fetchTarball {
   url = "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
 };
-hostName = builtins.getEnv "HOSTNAME";
-hostPath = "/etc/nixos/hosts/${hostName}.nix";
-hostConfig = if builtins.pathExists hostPath then hostPath else throw "Not found \"${hostPath}\" for HOSTNAME=\"${hostName}\"";
 in
 {
 system.stateVersion = "25.05";
@@ -14,7 +11,6 @@ system.stateVersion = "25.05";
 imports = [
   /etc/nixos/hardware-configuration.nix
   "${home-manager}/nixos"
-  hostConfig
 ];
 
 ############################# LOW-LEVEL STUFF #############################
@@ -22,7 +18,6 @@ imports = [
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
 
-networking.hostName = hostName;
 networking.networkmanager = {
   enable = true;
   plugins = with pkgs; [

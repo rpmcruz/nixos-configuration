@@ -2,6 +2,9 @@
 
 {
 
+imports = [ ./base.nix ];
+networking.hostName = "rfeup";
+
 # disable suspend
 services.logind.settings.Login = {
   IdleAction = "ignore";
@@ -24,9 +27,7 @@ home-manager.users.rpcruz.systemd.user.timers.update_fp = {
     Persistent = true;
     Unit = "update_fp.service";
   };
-  Install = {
-    WantedBy = [ "timers.target" ];
-  };
+  Install.WantedBy = [ "timers.target" ];
 };
 
 }
