@@ -6,13 +6,10 @@ imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
 # disable suspend
-services.logind.settings.Login = {
-  IdleAction = "ignore";
-  IdleActionSec = 0;
-  HandleLidSwitch = "ignore";
-  HandleLidSwitchDocked = "ignore";
-  HandleLidSwitchExternalPower = "ignore";
-};
+systemd.targets.sleep.enable = false;
+systemd.targets.suspend.enable = false;
+systemd.targets.hibernate.enable = false;
+systemd.targets.hybrid-sleep.enable = false;
 
 home-manager.users.rpcruz.systemd.user.services.update_fp = {
   Service = {
