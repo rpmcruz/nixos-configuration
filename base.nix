@@ -195,6 +195,10 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         switch-to-workspace-8 = ["<Control>F8"];
         switch-to-workspace-left = ["<Super>Left"];
         switch-to-workspace-right = ["<Super>Right"];
+        switch-applications = [];
+        switch-applications-backward = [];
+        switch-windows = ["<Super>Tab"];
+        switch-windows-backward = ["<Shift><Super>Tab"];
       };
       "org/gnome/file-roller/listing" = {
         list-mode = "as-folder";
