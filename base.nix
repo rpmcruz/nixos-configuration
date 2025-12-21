@@ -148,6 +148,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     enableDefaultConfig = false;
     matchBlocks = {
       atlas = { hostname = "atlas.fe.up.pt"; };
+      login = { hostname = "atlas.fe.up.pt"; };
       compute = { hostname = "compute01.atlas.fe.up.pt"; };
       rfeup = { hostname = "10.227.91.107"; };
       mia = { hostname = "10.227.246.75"; };
