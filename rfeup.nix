@@ -5,18 +5,6 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
-# disable suspend
-systemd.targets.sleep.enable = false;
-systemd.targets.suspend.enable = false;
-systemd.targets.hibernate.enable = false;
-systemd.targets.hybrid-sleep.enable = false;
-systemd.sleep.extraConfig = ''
-  AllowSuspend=no
-  AllowHibernation=no
-  AllowHybridSleep=no
-  AllowSuspendThenHibernate=no
-'';
-
 home-manager.users.rpcruz.systemd.user.services.update_fp = {
   Service = {
     Type = "oneshot";
