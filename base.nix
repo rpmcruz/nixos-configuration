@@ -62,6 +62,7 @@ nix.gc.automatic = true;
 nixpkgs.config.allowUnfree = true;
 environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
+  tmux
   google-chrome
   vscode
   libreoffice

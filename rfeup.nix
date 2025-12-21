@@ -17,7 +17,7 @@ systemd.sleep.extraConfig = ''
   AllowSuspendThenHibernate=no
 '';
 
-home-manager.users.rpcruz.systemd.user.services.update_fp = {
+home-manager.users.rpcruz.systemd.user.services.fpro = {
   Service = {
     Type = "oneshot";
     WorkingDirectory = "/home/rpcruz/projs/FP-Admin/moodle-api";
@@ -26,11 +26,11 @@ home-manager.users.rpcruz.systemd.user.services.update_fp = {
     KillMode = "process";
   };
 };
-home-manager.users.rpcruz.systemd.user.timers.update_fp = {
+home-manager.users.rpcruz.systemd.user.timers.fpro = {
   Timer = {
-    OnCalendar = "hourly";
+    OnCalendar = "00/2:00";  # every 2 hours
     Persistent = true;
-    Unit = "update_fp.service";
+    Unit = "fpro.service";
   };
   Install.WantedBy = [ "timers.target" ];
 };
