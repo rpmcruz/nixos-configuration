@@ -5,9 +5,7 @@
 imports = [ ./base.nix ];
 networking.hostName = "casa";
 
-environment.systemPackages = lib.mkAfter (with pkgs; [
-  steam
-]);
+programs.steam.enable = true;
 
 services.xserver.videoDrivers = [ "nvidia" ];
 hardware.nvidia = {

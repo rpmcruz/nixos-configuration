@@ -158,28 +158,29 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     };
   };
   # gnome stuff
-  # to make forge working, you may need to edit .local/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json and add a new "shell-version"
   home.packages = with pkgs.gnomeExtensions; [
     forge
     dash-to-panel
     clipboard-indicator
+    appindicator
   ];
   dconf = {
     settings = {
-      "org/gnome/desktop/session" = {
-        idle-delay = lib.hm.gvariant.mkUint32 1800;
-      };
-      "org/gnome/desktop/interface" = {
-        text-scaling-factor = 1.25;
-      };
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = with pkgs.gnomeExtensions; [
           forge.extensionUuid
           dash-to-panel.extensionUuid
           clipboard-indicator.extensionUuid
+          appindicator.extensionUuid
         ];
         favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
+      };
+      "org/gnome/desktop/session" = {
+        idle-delay = lib.hm.gvariant.mkUint32 1800;
+      };
+      "org/gnome/desktop/interface" = {
+        text-scaling-factor = 1.25;
       };
       "org/gnome/shell/extensions/forge" = {
         window-gap-hidden-on-single = true;
