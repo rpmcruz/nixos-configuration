@@ -177,6 +177,9 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         ];
         favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
       };
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
       "org/gnome/desktop/session" = {
         idle-delay = lib.hm.gvariant.mkUint32 1800;
       };
