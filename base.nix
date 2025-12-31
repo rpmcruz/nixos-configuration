@@ -105,6 +105,11 @@ systemd.services.libvirt-default-network = {
   };
 };
 
+nix.settings.experimental-features = [
+  "nix-command"
+  "flakes"
+];
+
 ############################# MISC #############################
 
 # disable suspend
