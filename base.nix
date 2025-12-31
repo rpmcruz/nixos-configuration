@@ -56,6 +56,13 @@ services.pipewire = {
 
 ############################# PACKAGES #############################
 
+nix = {  # keys for ROS https://github.com/lopsided98/nix-ros-overlay
+  extraOptions = ''
+    extra-substituters = https://ros.cachix.org
+    extra-trusted-public-keys = ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=
+  '';
+};
+
 system.autoUpgrade.enable = true;
 nix.gc.automatic = true;
 
