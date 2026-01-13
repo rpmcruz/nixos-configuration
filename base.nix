@@ -95,6 +95,7 @@ LD_LIBRARY_PATH =
   ];
 };
 
+# allow running things like virt-manager
 programs.virt-manager.enable = true;
 virtualisation.libvirtd.enable = true;
 virtualisation.spiceUSBRedirection.enable = true;
@@ -111,6 +112,10 @@ systemd.services.libvirt-default-network = {
     User = "root";
   };
 };
+
+# allow running docker images (podman is compatible)
+virtualisation.podman.enable = true;
+virtualisation.podman.dockerCompat = true;
 
 nix.settings.experimental-features = [
   "nix-command"
