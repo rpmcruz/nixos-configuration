@@ -79,7 +79,6 @@ environment.systemPackages = with pkgs; [
   gummi texliveFull
   xournalpp pdfarranger gromit-mpx
   poppler-utils  # pdfimages and etc
-  chromedriver  # for Selenium
   # Nix comes with many python packages, but pip has more packages
   # we can just do "python3 -m venv name" and then install packages there
   python3
