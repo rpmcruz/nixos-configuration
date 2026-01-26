@@ -5,7 +5,7 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
-home-manager.users.rpcruz.systemd.user.services.update_fp = {
+home-manager.users.rpcruz.systemd.user.services.fpro = {
   Service = {
     Type = "oneshot";
     WorkingDirectory = "/home/rpcruz/projs/FP-Admin/moodle-api";
