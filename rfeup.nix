@@ -15,7 +15,7 @@ home-manager.users.rpcruz.systemd.user.services.fpro = {
 };
 home-manager.users.rpcruz.systemd.user.timers.fpro = {
   Timer = {
-    OnCalendar = "*:00/2:00";  # every 2 hours
+    OnUnitActiveSec = "2h";
     Unit = "fpro.service";
   };
   Install.WantedBy = [ "timers.target" ];
