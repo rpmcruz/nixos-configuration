@@ -5,6 +5,7 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
+/*
 home-manager.users.rpcruz.systemd.user.services.fpro = {
   Service = {
     Type = "oneshot";
@@ -20,5 +21,6 @@ home-manager.users.rpcruz.systemd.user.timers.fpro = {
   };
   Install.WantedBy = [ "timers.target" ];
 };
+*/
 
 }
