@@ -15,6 +15,7 @@ users.users.claw = {
   ];
 };
 home-manager.users.claw = {
+  programs.bash.enable = true;
   home.stateVersion = "25.05";
   home.sessionVariables = {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
