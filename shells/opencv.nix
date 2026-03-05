@@ -9,6 +9,7 @@ pkgs.mkShell {
       ipykernel
       matplotlib
       scipy
+      ipywidgets
     ]))
   ];
 }
