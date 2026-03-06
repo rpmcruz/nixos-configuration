@@ -5,6 +5,7 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
+/*
 users.users.claw = {
   isNormalUser = true;
   description = "Claw AI Agent";
@@ -28,6 +29,7 @@ home-manager.users.claw = {
     "$HOME/gog"
   ];
 };
+*/
 
 /*
 home-manager.users.rpcruz.systemd.user.services.fpro = {

@@ -6,7 +6,7 @@ home-manager = builtins.fetchTarball {
 };
 in
 {
-system.stateVersion = "25.05";
+system.stateVersion = "25.11";
 
 imports = [
   /etc/nixos/hardware-configuration.nix
@@ -153,7 +153,7 @@ users.users.rpcruz = {
 security.sudo.wheelNeedsPassword = false;
 
 home-manager.users.rpcruz = { pkgs, lib, ... }: {
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   # git
   programs.git = {
     enable = true;
