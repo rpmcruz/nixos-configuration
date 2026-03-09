@@ -64,8 +64,11 @@ nix = {  # keys for ROS https://github.com/lopsided98/nix-ros-overlay
 };
 
 system.autoUpgrade.enable = true;
-nix.gc.automatic = true;
-nix.gc.dates = "monthly";
+nix.gc = {
+  automatic = true;
+  dates = "monthly";
+  options = "--delete-older-than 60d";
+};
 
 nixpkgs.config.allowUnfree = true;
 environment.systemPackages = with pkgs; [
