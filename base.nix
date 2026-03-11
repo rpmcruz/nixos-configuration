@@ -56,13 +56,6 @@ services.pipewire = {
 
 ############################# PACKAGES #############################
 
-nix = {  # keys for ROS https://github.com/lopsided98/nix-ros-overlay
-  extraOptions = ''
-    extra-substituters = https://ros.cachix.org
-    extra-trusted-public-keys = ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=
-  '';
-};
-
 system.autoUpgrade.enable = true;
 nix.gc = {
   automatic = true;
@@ -82,7 +75,7 @@ environment.systemPackages = with pkgs; [
   transmission_4-gtk
   gummi texliveFull
   xournalpp pdfarranger gromit-mpx
-  poppler-utils  # pdfimages and etc
+  pandoc poppler-utils  # pdfimages and etc
   # Nix comes with many python packages, but pip has more packages
   # we can just do "python3 -m venv name" and then install packages there
   python3
@@ -121,11 +114,6 @@ systemd.services.libvirt-default-network = {
 # allow running docker images (podman is compatible)
 virtualisation.podman.enable = true;
 virtualisation.podman.dockerCompat = true;
-
-nix.settings.experimental-features = [
-  "nix-command"
-  "flakes"
-];
 
 ############################# MISC #############################
 
