@@ -83,10 +83,8 @@ environment.systemPackages = with pkgs; [
 services.flatpak.enable = true;
 
 environment.variables = {
-LD_LIBRARY_PATH =
-  "/run/opengl-driver/lib:" +
+LD_LIBRARY_PATH =  # for pip packages like pytorch
   pkgs.lib.makeLibraryPath [
-    # for pytorch
     pkgs.stdenv.cc.cc.lib
     pkgs.zlib
     pkgs.cudaPackages.cudatoolkit
