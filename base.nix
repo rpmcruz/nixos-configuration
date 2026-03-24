@@ -84,6 +84,7 @@ services.flatpak.enable = true;
 
 environment.variables = {
 LD_LIBRARY_PATH =  # for pip packages like pytorch
+  "/run/opengl-driver/lib:" +
   pkgs.lib.makeLibraryPath [
     pkgs.stdenv.cc.cc.lib
     pkgs.zlib
