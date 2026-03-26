@@ -74,7 +74,7 @@ environment.systemPackages = with pkgs; [
   pinta inkscape
   transmission_4-gtk
   gummi texliveFull
-  xournalpp pdfarranger gromit-mpx
+  xournalpp pdfarranger gromit-mpx meld
   pandoc poppler-utils  # pdfimages and etc
   # Nix comes with many python packages, but pip has more packages
   # we can just do "python3 -m venv name" and then install packages there

@@ -10,6 +10,8 @@ pkgs.mkShell {
       matplotlib
       scipy
       ipywidgets
+      scikit-learn
+      pandas
     ]))
   ];
 }
