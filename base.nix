@@ -198,6 +198,9 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/desktop/interface" = {
         text-scaling-factor = 1.25;
       };
+      "org/gnome/mutter" = {
+        auto-maximize = false;
+      };
       "org/gnome/shell/extensions/forge" = {
         window-gap-hidden-on-single = true;
         window-gap-size-increment = lib.hm.gvariant.mkUint32 0;
