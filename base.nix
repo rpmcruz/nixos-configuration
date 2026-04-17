@@ -164,6 +164,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       login = { hostname = "atlas.fe.up.pt"; };
       compute = { hostname = "compute01.atlas.fe.up.pt"; };
       rfeup = { hostname = "10.227.91.107"; };
+      jetson = { hostname = "10.227.91.111"; };
       mia = { hostname = "10.227.246.75"; };
       mia01 = { hostname = "10.227.246.73"; };
       mia02 = { hostname = "10.227.246.74"; };
