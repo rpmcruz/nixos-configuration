@@ -6,6 +6,7 @@ pkgs.mkShell {
       ipykernel
       matplotlib
       torchvision
+      transformers
     ]))
   ];
 }
