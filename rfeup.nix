@@ -7,7 +7,7 @@ networking.hostName = "rfeup";
 
 services.xserver.videoDrivers = [ "nvidia" ];
 hardware.nvidia = {
-  open = false;
+  open = true;
   modesetting.enable = false;
 };
 hardware.graphics.enable = true;
