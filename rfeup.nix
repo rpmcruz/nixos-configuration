@@ -5,6 +5,17 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
+services.xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia = {
+  open = false;
+  modesetting.enable = false;
+};
+hardware.graphics.enable = true;
+# headless CUDA:
+boot.extraModprobeConfig = ''
+  options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
+'';
+
 /*
 users.users.claw = {
   isNormalUser = true;
