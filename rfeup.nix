@@ -20,6 +20,7 @@ users.users.miguel = {
   isNormalUser = true;
   password = "{SSHA}CcABNzLrObX7Wa13ysTKJ1CPqVAAUWBK";
   packages = with pkgs; [
+    python3 micromamba uv poetry
   ];
 };
 home-manager.users.miguel = {
@@ -47,6 +48,7 @@ home-manager.users.miguel = {
       ]);
   };
 };
+services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
 
