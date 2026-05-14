@@ -23,6 +23,7 @@ users.users.miguel = {
   ];
 };
 home-manager.users.miguel = {
+  home.stateVersion = "25.11";
   home.sessionVariables = {
     ES2_LIBRARY = "${pkgs.libglvnd}/lib/libGLESv2.so.2";
     VISPY_GL_LIB = "${pkgs.libglvnd}/lib/libGL.so.1";
