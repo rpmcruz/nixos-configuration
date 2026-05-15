@@ -18,7 +18,6 @@ boot.extraModprobeConfig = ''
 
 users.users.miguel = {
   isNormalUser = true;
-  password = "{SSHA}CcABNzLrObX7Wa13ysTKJ1CPqVAAUWBK";
   packages = with pkgs; [
     python3 micromamba uv poetry
   ];
