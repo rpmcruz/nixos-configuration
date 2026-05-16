@@ -68,7 +68,10 @@ environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
   tmux
   google-chrome
-  vscode vscode-extensions.anthropic.claude-code
+  claude-code
+  (vscode-with-extensions.override {
+    vscodeExtensions = [ vscode-extensions.anthropic.claude-code ];
+  })
   libreoffice
   git
   pinta inkscape
