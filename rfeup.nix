@@ -5,6 +5,54 @@
 imports = [ ./base.nix ];
 networking.hostName = "rfeup";
 
+services.xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia = {
+  open = true;
+  modesetting.enable = false;
+};
+hardware.graphics.enable = true;
+# headless CUDA:
+boot.extraModprobeConfig = ''
+  options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
+'';
+
+users.users.miguel = {
+  isNormalUser = true;
+  packages = with pkgs; [
+    python3 micromamba uv poetry
+  ];
+};
+home-manager.users.miguel = {
+  home.stateVersion = "25.11";
+  home.sessionVariables = {
+    ES2_LIBRARY = "${pkgs.libglvnd}/lib/libGLESv2.so.2";
+    VISPY_GL_LIB = "${pkgs.libglvnd}/lib/libGL.so.1";
+    LD_LIBRARY_PATH =
+      "/run/opengl-driver/lib:" +
+      (with pkgs; lib.makeLibraryPath [
+        # for pytorch
+        stdenv.cc.cc.lib
+        zlib
+        cudaPackages.cudatoolkit
+        # micro-sam
+        libGL libglvnd mesa
+        # cellpose-sam
+        glib fontconfig xorg.libX11 libxkbcommon freetype dbus xorg.libxcb
+        xcb-util-cursor wayland
+        zstd
+        xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi xorg.libXrandr
+        xorg.libXcursor xorg.libSM xorg.libICE
+        xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilrenderutil xorg.xcbutilwm
+        xorg.libXtst
+      ]);
+  };
+};
+services.xserver.desktopManager.xfce.enable = true;
+services.xrdp.enable = true;
+services.xrdp.defaultWindowManager = "xfce4-session";
+
+
+
 /*
 users.users.claw = {
   isNormalUser = true;
