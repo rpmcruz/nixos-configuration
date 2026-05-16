@@ -180,6 +180,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
   home.file.".config/Code/User/settings.json".text = builtins.toJSON {
     "editor.minimap.enabled" = false;
     "workbench.panel.defaultLocation" = "right";
+    "chat.commandCenter.enabled" = false;
   };
   home.packages = with pkgs.gnomeExtensions; [
     forge
