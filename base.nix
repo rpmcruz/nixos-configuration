@@ -94,6 +94,14 @@ LD_LIBRARY_PATH =  # for pip packages like pytorch
   ];
 };
 
+# the following is required by some apps, namely vscode-claude-extension
+programs.nix-ld.enable = true;
+programs.nix-ld.libraries = with pkgs; [
+  stdenv.cc.cc.lib  # libstdc++
+  zlib
+  openssl
+];
+
 /*
 # allow running things like virt-manager
 programs.virt-manager.enable = true;
@@ -179,7 +187,6 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
   };
   home.file.".config/Code/User/settings.json".text = builtins.toJSON {
     "editor.minimap.enabled" = false;
-    "workbench.panel.defaultLocation" = "right";
     "chat.commandCenter.enabled" = false;
   };
   home.packages = with pkgs.gnomeExtensions; [
