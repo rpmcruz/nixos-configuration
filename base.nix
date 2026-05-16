@@ -68,7 +68,7 @@ environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
   tmux
   google-chrome
-  vscode
+  vscode vscode-extensions.anthropic.claude-code
   libreoffice
   git
   pinta inkscape
