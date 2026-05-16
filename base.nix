@@ -68,10 +68,7 @@ environment.systemPackages = with pkgs; [
   ppp  # needed for L2TP to work
   tmux
   google-chrome
-  claude-code
-  (vscode-with-extensions.override {
-    vscodeExtensions = [ vscode-extensions.anthropic.claude-code ];
-  })
+  vscode claude-code
   libreoffice
   git
   pinta inkscape
@@ -151,7 +148,7 @@ security.sudo.wheelNeedsPassword = false;
 
 home-manager.users.rpcruz = { pkgs, lib, ... }: {
   home.stateVersion = "25.11";
-  # git
+  nixpkgs.config.allowUnfree = true;
   programs.git = {
     enable = true;
     settings.user = {
@@ -159,7 +156,6 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       email = "ricardo.pdm.cruz@gmail.com";
     };
   };
-  # ssh
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -175,7 +171,16 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       deucalion = { hostname = "login.deucalion.macc.fccn.pt"; user = "rcruz.up"; };
     };
   };
-  # gnome stuff
+  programs.vscode = {
+    enable = true;
+    profiles.default.extensions = [
+      pkgs.vscode-extensions.anthropic.claude-code
+    ];
+  };
+  home.file.".config/Code/User/settings.json".text = builtins.toJSON {
+    "editor.minimap.enabled" = false;
+    "workbench.panel.defaultLocation" = "right";
+  };
   home.packages = with pkgs.gnomeExtensions; [
     forge
     dash-to-panel
