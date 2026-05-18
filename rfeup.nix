@@ -51,6 +51,17 @@ services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
 
+home-manager.users.rpcruz = {
+  # mouse cursor gets broken after enabling xfce
+  dconf = {
+    settings = {
+      "org/gnome/desktop/interface" = {
+        cursor-theme = "Adwaita";
+        cursor-size = 24;
+      };
+    };
+  };
+};
 
 
 /*
