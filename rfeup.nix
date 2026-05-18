@@ -1,28 +1,7 @@
 { pkgs, ... }:
 
-{
-
-imports = [ ./base.nix ];
-networking.hostName = "rfeup";
-
-services.xserver.videoDrivers = [ "nvidia" ];
-hardware.nvidia = {
-  open = true;
-  modesetting.enable = false;
-};
-hardware.graphics.enable = true;
-# headless CUDA:
-boot.extraModprobeConfig = ''
-  options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
-'';
-
-users.users.miguel = {
-  isNormalUser = true;
-  packages = with pkgs; [
-    python3 micromamba uv poetry
-  ];
-};
-home-manager.users.miguel = {
+let
+sharedHomeConfig = {
   home.stateVersion = "25.11";
   home.sessionVariables = {
     ES2_LIBRARY = "${pkgs.libglvnd}/lib/libGLESv2.so.2";
@@ -47,6 +26,37 @@ home-manager.users.miguel = {
       ]);
   };
 };
+in
+{
+
+imports = [ ./base.nix ];
+networking.hostName = "rfeup";
+
+services.xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia = {
+  open = true;
+  modesetting.enable = false;
+};
+hardware.graphics.enable = true;
+# headless CUDA:
+boot.extraModprobeConfig = ''
+  options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
+'';
+
+users.users.miguel = {
+  isNormalUser = true;
+  packages = with pkgs; [
+    python3 micromamba uv poetry
+  ];
+};
+home-manager.users.miguel = sharedHomeConfig;
+users.users.bfmc = {
+  isNormalUser = true;
+  packages = with pkgs; [
+    python3 micromamba uv poetry
+  ];
+};
+home-manager.users.bfmc = sharedHomeConfig;
 services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
