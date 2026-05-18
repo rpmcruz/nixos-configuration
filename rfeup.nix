@@ -80,6 +80,16 @@ programs.nix-ld = {
   ];
 };
 
+environment.systemPackages = with pkgs; [
+  docker-compose ];
+virtualisation.docker.enable = true;
+users.users.rpcruz.extraGroups = [ "docker" ];
+users.users.bfmc.extraGroups = [ "docker" ];
+
+# enable cuda docker GPU
+hardware.nvidia-container-toolkit.enable = true;
+virtualisation.docker.daemon.settings.features.cdi = true;
+
 home-manager.users.rpcruz = {
   # mouse cursor gets broken after enabling xfce
   dconf = {
