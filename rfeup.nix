@@ -51,6 +51,25 @@ services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
 
+programs.nix-ld = {
+  enable = true;
+  libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    cudaPackages.cudatoolkit
+    # micro-sam
+    libGL libglvnd mesa
+    # cellpose-sam
+    glib fontconfig xorg.libX11 libxkbcommon freetype dbus xorg.libxcb
+    xcb-util-cursor wayland
+    zstd
+    xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi xorg.libXrandr
+    xorg.libXcursor xorg.libSM xorg.libICE
+    xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilrenderutil xorg.xcbutilwm
+    xorg.libXtst
+  ];
+};
+
 home-manager.users.rpcruz = {
   # mouse cursor gets broken after enabling xfce
   dconf = {
