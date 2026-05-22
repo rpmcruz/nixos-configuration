@@ -50,13 +50,6 @@ users.users.miguel = {
   ];
 };
 home-manager.users.miguel = sharedHomeConfig;
-users.users.bfmc = {
-  isNormalUser = true;
-  packages = with pkgs; [
-    python3 micromamba uv poetry
-  ];
-};
-home-manager.users.bfmc = sharedHomeConfig;
 services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
@@ -79,16 +72,6 @@ programs.nix-ld = {
     xorg.libXtst
   ];
 };
-
-environment.systemPackages = with pkgs; [
-  docker-compose ];
-virtualisation.docker.enable = true;
-users.users.rpcruz.extraGroups = [ "docker" ];
-users.users.bfmc.extraGroups = [ "docker" ];
-
-# enable cuda docker GPU
-hardware.nvidia-container-toolkit.enable = true;
-virtualisation.docker.daemon.settings.features.cdi = true;
 
 home-manager.users.rpcruz = {
   # mouse cursor gets broken after enabling xfce
