@@ -47,6 +47,7 @@ users.users.miguel = {
   isNormalUser = true;
   packages = with pkgs; [
     python3 micromamba uv poetry
+    gcc
   ];
 };
 home-manager.users.miguel = sharedHomeConfig;
