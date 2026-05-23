@@ -55,6 +55,12 @@ services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
 
+# add SWAP because of cellpose
+swapDevices = [{
+  device = "/swapfile";
+  size = 4096;  # Size in MB (4GB in this example)
+}];
+
 programs.nix-ld = {
   enable = true;
   libraries = with pkgs; [
