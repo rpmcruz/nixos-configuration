@@ -86,7 +86,6 @@ home-manager.users.rpcruz = {
     settings = {
       "org/gnome/desktop/interface" = {
         cursor-theme = "Adwaita";
-        cursor-size = 24;
       };
     };
   };
