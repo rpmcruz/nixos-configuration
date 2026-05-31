@@ -2,7 +2,7 @@
 
 let
 home-manager = builtins.fetchTarball {
-  url = "https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz";
+  url = "https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz";
 };
 in
 {
@@ -18,12 +18,9 @@ imports = [
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
 
-networking.networkmanager = {
-  enable = true;
-  plugins = with pkgs; [
-    networkmanager-l2tp
-  ];
-};
+networking.networkmanager.plugins = with pkgs; [
+  networkmanager-l2tp
+];
 # fix networkmanager-l2tp
 services.strongswan.enable = true;  # for IPsec
 environment.etc."strongswan.conf".text = "";
@@ -31,28 +28,15 @@ environment.etc."strongswan.conf".text = "";
 time.timeZone = "Europe/Lisbon";
 i18n.defaultLocale = "pt_PT.UTF-8";
 services.xserver.xkb.layout = "pt";
-console.keyMap = "pt-latin1";
-i18n.inputMethod = {
-  enable = true;  # required for keyboard accents to work
-  type = "ibus";
-};
+console.useXkbConfig = true;
 
 services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 
-# print
-services.printing.enable = true;
-
 # sound
-services.pulseaudio.enable = false;
+services.pipewire.alsa.support32Bit = true;
 security.rtkit.enable = true;
-services.pipewire = {
-  enable = true;
-  alsa.enable = true;
-  alsa.support32Bit = true;
-  pulse.enable = true;
-};
 
 ############################# PACKAGES #############################
 
@@ -133,12 +117,12 @@ systemd.targets.sleep.enable = false;
 systemd.targets.suspend.enable = false;
 systemd.targets.hibernate.enable = false;
 systemd.targets.hybrid-sleep.enable = false;
-systemd.sleep.extraConfig = ''
-  AllowSuspend=no
-  AllowHibernation=no
-  AllowHybridSleep=no
-  AllowSuspendThenHibernate=no
-'';
+systemd.sleep.settings.Sleep = {
+  AllowSuspend = false;
+  AllowHibernation = false;
+  AllowHybridSleep = false;
+  AllowSuspendThenHibernate = false;
+};
 
 services.openssh.enable = true;
 networking.firewall.enable = false;
@@ -167,16 +151,16 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
-      atlas = { hostname = "atlas.fe.up.pt"; };
-      login = { hostname = "atlas.fe.up.pt"; };
-      compute = { hostname = "compute01.atlas.fe.up.pt"; };
-      rfeup = { hostname = "10.227.91.107"; };
-      cilia = { hostname = "10.227.246.79"; };
-      mia = { hostname = "10.227.246.75"; };
-      mia01 = { hostname = "10.227.246.73"; };
-      mia02 = { hostname = "10.227.246.74"; };
-      deucalion = { hostname = "login.deucalion.macc.fccn.pt"; user = "rcruz.up"; };
+    settings = {
+      atlas = { HostName = "atlas.fe.up.pt"; };
+      login = { HostName = "atlas.fe.up.pt"; };
+      compute = { HostName = "compute01.atlas.fe.up.pt"; };
+      rfeup = { HostName = "10.227.91.107"; };
+      cilia = { HostName = "10.227.246.79"; };
+      mia = { HostName = "10.227.246.75"; };
+      mia01 = { HostName = "10.227.246.73"; };
+      mia02 = { HostName = "10.227.246.74"; };
+      deucalion = { HostName = "login.deucalion.macc.fccn.pt"; user = "rcruz.up"; };
     };
   };
   programs.vscode = {

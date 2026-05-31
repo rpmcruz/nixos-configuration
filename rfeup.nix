@@ -38,10 +38,6 @@ hardware.nvidia = {
   modesetting.enable = false;
 };
 hardware.graphics.enable = true;
-# headless CUDA:
-boot.extraModprobeConfig = ''
-  options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
-'';
 
 users.users.miguel = {
   isNormalUser = true;
@@ -90,7 +86,6 @@ home-manager.users.rpcruz = {
     };
   };
 };
-
 
 /*
 users.users.claw = {
