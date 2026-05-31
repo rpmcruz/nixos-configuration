@@ -16,13 +16,12 @@ sharedHomeConfig = {
         # micro-sam
         libGL libglvnd mesa
         # cellpose-sam
-        glib fontconfig xorg.libX11 libxkbcommon freetype dbus xorg.libxcb
+        glib fontconfig libX11 libxkbcommon freetype dbus libxcb
         xcb-util-cursor wayland
         zstd
-        xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi xorg.libXrandr
-        xorg.libXcursor xorg.libSM xorg.libICE
-        xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilrenderutil xorg.xcbutilwm
-        xorg.libXtst
+        libxcb libxext libxrender libxi libxrandr libxcursor libsm libice
+        xcbutil xcbutilimage xcbutilkeysyms xcbutilrenderutil xcbutilwm
+        libxtst
       ]);
   };
 };
@@ -66,13 +65,13 @@ programs.nix-ld = {
     # micro-sam
     libGL libglvnd mesa
     # cellpose-sam
-    glib fontconfig xorg.libX11 libxkbcommon freetype dbus xorg.libxcb
+    glib fontconfig libx11 libxkbcommon freetype dbus libxcb
     xcb-util-cursor wayland
     zstd
-    xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi xorg.libXrandr
-    xorg.libXcursor xorg.libSM xorg.libICE
-    xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilrenderutil xorg.xcbutilwm
-    xorg.libXtst
+    libxcb libxext libxrender libxi libxrandr
+    libxcursor libsm libice
+    xcbutil xcbutilimage xcbutilkeysyms xcbutilrenderutil xcbutilwm
+    libxtst
   ];
 };
 
