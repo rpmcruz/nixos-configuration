@@ -16,7 +16,7 @@ sharedHomeConfig = {
         # micro-sam
         libGL libglvnd mesa
         # cellpose-sam
-        glib fontconfig libX11 libxkbcommon freetype dbus xorg.libxcb
+        glib fontconfig libX11 libxkbcommon freetype dbus libxcb
         xcb-util-cursor wayland
         zstd
         libxcb libxext libxrender libxi libxrandr libxcursor libsm libice
