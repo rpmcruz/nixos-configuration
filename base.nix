@@ -201,6 +201,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/desktop/interface" = {
         text-scaling-factor = 1.25;
         cursor-size = 32;
+        gtk-enable-primary-paste = true;
       };
       "org/gnome/mutter" = {
         auto-maximize = false;
