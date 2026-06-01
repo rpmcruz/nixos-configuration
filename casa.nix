@@ -17,6 +17,9 @@ hardware.nvidia = {
   modesetting.enable = true;
   package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 };
-hardware.graphics.enable = true;
+hardware.graphics = {
+  enable = true;
+  extraPackages = with pkgs; [ libGL ];  # electron needs this for libEGL_mesa.so
+};
 
 }
