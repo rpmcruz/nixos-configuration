@@ -43,9 +43,10 @@ security.rtkit.enable = true;
 system.autoUpgrade.enable = true;
 nix.gc = {
   automatic = true;
-  dates = "monthly";
-  options = "--delete-older-than 60d";
+  dates = "weekly";
+  options = "--delete-older-than 14d";
 };
+nix.settings.auto-optimise-store = true;
 
 nixpkgs.config.allowUnfree = true;
 environment.systemPackages = with pkgs; [
