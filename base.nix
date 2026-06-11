@@ -174,6 +174,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     "editor.minimap.enabled" = false;
     "chat.commandCenter.enabled" = false;
     "claudeCode.preferredLocation" = "panel";
+    "claudeCode.allowDangerouslySkipPermissions" = true;
   };
   home.packages = with pkgs.gnomeExtensions; [
     forge
