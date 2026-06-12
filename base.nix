@@ -246,9 +246,6 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         switch-windows = ["<Super>Tab"];
         switch-windows-backward = ["<Shift><Super>Tab"];
       };
-      "org/gnome/file-roller/listing" = {
-        list-mode = "as-folder";
-      };
       "org/gnome/nautilus/list-view" = {
         default-visible-columns = ["name" "date_modified"];
       };
