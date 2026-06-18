@@ -214,6 +214,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         vertical-margin = 0;
         vertical-margin-bottom = 0;
         window-gap = 0;
+        show-workspace-indicator = false;
       };
       "org/gnome/TextEditor" = {
         highlight-current-line = true;
