@@ -177,7 +177,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     "claudeCode.allowDangerouslySkipPermissions" = true;
   };
   home.packages = with pkgs.gnomeExtensions; [
-    forge
+    paperwm
     dash-to-panel
     clipboard-indicator
     appindicator
@@ -187,7 +187,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = with pkgs.gnomeExtensions; [
-          forge.extensionUuid
+          paperwm.extensionUuid
           dash-to-panel.extensionUuid
           clipboard-indicator.extensionUuid
           appindicator.extensionUuid
@@ -208,14 +208,12 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/mutter" = {
         auto-maximize = false;
       };
-      "org/gnome/shell/extensions/forge" = {
-        window-gap-hidden-on-single = true;
-        window-gap-size-increment = lib.hm.gvariant.mkUint32 0;
-        focus-on-hover-enabled = true;
-        move-pointer-focus-enabled = true;
-        dnd-center-layout = "swap";
-        tabbed-tiling-mode-enabled = false;
-        stacked-tiling-mode-enabled = false;
+      "org/gnome/shell/extensions/paperwm" = {
+        selection-border-size = 2;
+        horizontal-margin = 0;
+        vertical-margin = 0;
+        vertical-margin-bottom = 0;
+        window-gap = 0;
       };
       "org/gnome/TextEditor" = {
         highlight-current-line = true;
