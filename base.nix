@@ -205,9 +205,6 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         cursor-size = 32;
         gtk-enable-primary-paste = true;
       };
-      "org/gnome/mutter" = {
-        auto-maximize = false;
-      };
       "org/gnome/shell/extensions/forge" = {
         window-gap-hidden-on-single = true;
         window-gap-size-increment = lib.hm.gvariant.mkUint32 0;
