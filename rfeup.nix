@@ -1,7 +1,26 @@
 { pkgs, ... }:
 
-let
-sharedHomeConfig = {
+{
+
+imports = [ ./base.nix ];
+networking.hostName = "rfeup";
+
+services.xserver.videoDrivers = [ "nvidia" ];
+hardware.nvidia = {
+  open = true;
+  modesetting.enable = false;
+};
+hardware.graphics.enable = true;
+
+users.users.miguel = {
+  isNormalUser = true;
+  packages = with pkgs; [
+    python3 micromamba uv poetry
+    gcc
+  ];
+
+};
+home-manager.users.miguel = {
   home.stateVersion = "25.11";
   home.sessionVariables = {
     ES2_LIBRARY = "${pkgs.libglvnd}/lib/libGLESv2.so.2";
@@ -24,28 +43,17 @@ sharedHomeConfig = {
         libxtst
       ]);
   };
+  programs.bash.initExtra = ''
+    export MAMBA_ROOT_PREFIX="''${MAMBA_ROOT_PREFIX:-$HOME/micromamba}"
+    __mamba_setup="$(micromamba shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2>/dev/null)"
+    if [ $? -eq 0 ]; then
+      eval "$__mamba_setup" 2>/dev/null
+      micromamba() { __mamba_wrap "$@"; }
+    fi
+    unset __mamba_setup
+  '';
 };
-in
-{
 
-imports = [ ./base.nix ];
-networking.hostName = "rfeup";
-
-services.xserver.videoDrivers = [ "nvidia" ];
-hardware.nvidia = {
-  open = true;
-  modesetting.enable = false;
-};
-hardware.graphics.enable = true;
-
-users.users.miguel = {
-  isNormalUser = true;
-  packages = with pkgs; [
-    python3 micromamba uv poetry
-    gcc
-  ];
-};
-home-manager.users.miguel = sharedHomeConfig;
 services.xserver.desktopManager.xfce.enable = true;
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "xfce4-session";
