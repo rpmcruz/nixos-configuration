@@ -208,6 +208,9 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/mutter" = {
         auto-maximize = false;
       };
+      "org/gnome/desktop/wm/preferences" = {
+        button-layout = "appmenu:minimize,maximize,close";
+      };
       "org/gnome/shell/extensions/paperwm" = {
         selection-border-size = 2;
         horizontal-margin = 0;
@@ -217,19 +220,8 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         show-workspace-indicator = false;
       };
       "org/gnome/shell/extensions/paperwm/keybindings" = {
-        switch-left = ["<Control>Left"];
-        switch-right = ["<Control>Right"];
-      };
-      "org/gnome/TextEditor" = {
-        highlight-current-line = true;
-        restore-session = false;
-        show-line-numbers = true;
-        spellcheck = false;
-        tab-width = lib.hm.gvariant.mkUint32 4;
-        indent-style = "space";
-      };
-      "org/gnome/desktop/wm/preferences" = {
-        button-layout = "appmenu:minimize,maximize,close";
+        switch-left = ["<Super>Left"];
+        switch-right = ["<Super>Right"];
       };
       "org/gnome/desktop/wm/keybindings" = {
         move-to-workspace-left = ["<Shift><Super>Left"];
@@ -242,8 +234,8 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         switch-to-workspace-6 = ["<Control>F6"];
         switch-to-workspace-7 = ["<Control>F7"];
         switch-to-workspace-8 = ["<Control>F8"];
-        switch-to-workspace-left = ["<Super>Left"];
-        switch-to-workspace-right = ["<Super>Right"];
+        switch-to-workspace-left = ["<Control><Super>Left"];
+        switch-to-workspace-right = ["<Control><Super>Right"];
         switch-applications = [];
         switch-applications-backward = [];
         switch-windows = ["<Super>Tab"];
@@ -254,6 +246,14 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       };
       "org/gnome/nautilus/preferences" = {
         default-folder-viewer = "list-view";
+      };
+      "org/gnome/TextEditor" = {
+        highlight-current-line = true;
+        restore-session = false;
+        show-line-numbers = true;
+        spellcheck = false;
+        tab-width = lib.hm.gvariant.mkUint32 4;
+        indent-style = "space";
       };
     };
   };
