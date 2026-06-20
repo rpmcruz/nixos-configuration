@@ -216,6 +216,10 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         window-gap = 0;
         show-workspace-indicator = false;
       };
+      "org/gnome/shell/extensions/paperwm/keybindings" = {
+        switch-left = ["<Control>Left"];
+        switch-right = ["<Control>Right"];
+      };
       "org/gnome/TextEditor" = {
         highlight-current-line = true;
         restore-session = false;
