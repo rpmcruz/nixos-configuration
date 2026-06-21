@@ -43,15 +43,18 @@ home-manager.users.miguel = {
         libxtst
       ]);
   };
-  programs.bash.initExtra = ''
-    export MAMBA_ROOT_PREFIX="''${MAMBA_ROOT_PREFIX:-$HOME/micromamba}"
-    __mamba_setup="$(micromamba shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2>/dev/null)"
-    if [ $? -eq 0 ]; then
-      eval "$__mamba_setup" 2>/dev/null
-      micromamba() { __mamba_wrap "$@"; }
-    fi
-    unset __mamba_setup
-  '';
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      export MAMBA_ROOT_PREFIX="''${MAMBA_ROOT_PREFIX:-$HOME/micromamba}"
+      __mamba_setup="$(micromamba shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2>/dev/null)"
+      if [ $? -eq 0 ]; then
+        eval "$__mamba_setup" 2>/dev/null
+        micromamba() { __mamba_wrap "$@"; }
+      fi
+      unset __mamba_setup
+    '';
+  };
 };
 
 services.xserver.desktopManager.xfce.enable = true;
