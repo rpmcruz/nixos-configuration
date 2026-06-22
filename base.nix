@@ -224,7 +224,6 @@ in {
         window-gap-hidden-on-single = true;
         window-gap-size-increment = lib.hm.gvariant.mkUint32 0;
         focus-on-hover-enabled = true;
-        move-pointer-focus-enabled = true;
         dnd-center-layout = "swap";
         tabbed-tiling-mode-enabled = false;
         stacked-tiling-mode-enabled = false;
