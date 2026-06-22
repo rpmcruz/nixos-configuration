@@ -139,7 +139,16 @@ users.users.rpcruz = {
 };
 security.sudo.wheelNeedsPassword = false;
 
-home-manager.users.rpcruz = { pkgs, lib, ... }: {
+home-manager.users.rpcruz = { pkgs, lib, ... }:
+# it takes a while for forge to support the new gnome version in nixpkgs
+let forge = pkgs.gnomeExtensions.forge.overrideAttrs (old: {
+  postInstall = (old.postInstall or "") + ''
+    substituteInPlace \
+      $out/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json \
+      --replace-fail '"49"]' '"49", "50"]'
+    '';
+  });
+in {
   home.stateVersion = "25.11";
   nixpkgs.config.allowUnfree = true;
   programs.git = {
@@ -177,7 +186,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
     "claudeCode.allowDangerouslySkipPermissions" = true;
   };
   home.packages = with pkgs.gnomeExtensions; [
-    paperwm
+    forge
     dash-to-panel
     clipboard-indicator
     appindicator
@@ -187,7 +196,7 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = with pkgs.gnomeExtensions; [
-          paperwm.extensionUuid
+          forge.extensionUuid
           dash-to-panel.extensionUuid
           clipboard-indicator.extensionUuid
           appindicator.extensionUuid
@@ -211,17 +220,14 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
       "org/gnome/desktop/wm/preferences" = {
         button-layout = "appmenu:minimize,maximize,close";
       };
-      "org/gnome/shell/extensions/paperwm" = {
-        selection-border-size = 2;
-        horizontal-margin = 0;
-        vertical-margin = 0;
-        vertical-margin-bottom = 0;
-        window-gap = 0;
-        show-workspace-indicator = false;
-      };
-      "org/gnome/shell/extensions/paperwm/keybindings" = {
-        switch-left = ["<Super>Left"];
-        switch-right = ["<Super>Right"];
+      "org/gnome/shell/extensions/forge" = {
+        window-gap-hidden-on-single = true;
+        window-gap-size-increment = lib.hm.gvariant.mkUint32 0;
+        focus-on-hover-enabled = true;
+        move-pointer-focus-enabled = true;
+        dnd-center-layout = "swap";
+        tabbed-tiling-mode-enabled = false;
+        stacked-tiling-mode-enabled = false;
       };
       "org/gnome/desktop/wm/keybindings" = {
         move-to-workspace-left = ["<Shift><Super>Left"];
@@ -234,8 +240,8 @@ home-manager.users.rpcruz = { pkgs, lib, ... }: {
         switch-to-workspace-6 = ["<Control>F6"];
         switch-to-workspace-7 = ["<Control>F7"];
         switch-to-workspace-8 = ["<Control>F8"];
-        switch-to-workspace-left = ["<Control><Super>Left"];
-        switch-to-workspace-right = ["<Control><Super>Right"];
+        switch-to-workspace-left = ["<Super>Left"];
+        switch-to-workspace-right = ["<Super>Right"];
         switch-applications = [];
         switch-applications-backward = [];
         switch-windows = ["<Super>Tab"];
