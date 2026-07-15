@@ -1,9 +1,8 @@
 { config, pkgs, ... }:
 
 let
-home-manager = builtins.fetchTarball {
-  url = "https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz";
-};
+home-manager = builtins.fetchTarball { url = "https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz"; };
+nix-flatpak = builtins.fetchTarball { url = "https://github.com/gmodena/nix-flatpak/archive/latest.tar.gz"; };
 in
 {
 system.stateVersion = "25.11";
@@ -11,6 +10,7 @@ system.stateVersion = "25.11";
 imports = [
   /etc/nixos/hardware-configuration.nix
   "${home-manager}/nixos"
+  "${nix-flatpak}/modules/nixos.nix"
 ];
 
 ############################# LOW-LEVEL STUFF #############################
@@ -67,16 +67,33 @@ environment.systemPackages = with pkgs; [
   # we can just do "python3 -m venv name" and then install packages there
   python3
 ];
-services.flatpak.enable = true;
+
+services.flatpak = {
+  enable = true;
+  remotes = [{
+    name = "flathub";
+    location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+  }];
+  packages = [
+    rec {
+      appId = "pt.gov.autenticacao";
+      sha256 = "1sfw6kji81rc60811h67x6dj22gav4wjrnv6ils6wqgyjbayx5in";
+      bundle = "${pkgs.fetchurl {
+        url = "https://aplicacoes.autenticacao.gov.pt/apps/pteid-mw-linux.x86_64.flatpak";
+        inherit sha256;
+      }}";
+    }
+  ];
+};
 
 environment.variables = {
-LD_LIBRARY_PATH =  # for pip packages like pytorch
-  "/run/opengl-driver/lib:" +
-  pkgs.lib.makeLibraryPath [
-    pkgs.stdenv.cc.cc.lib
-    pkgs.zlib
-    pkgs.cudaPackages.cudatoolkit
-  ];
+  LD_LIBRARY_PATH =  # for pip packages like pytorch
+    "/run/opengl-driver/lib:" +
+    pkgs.lib.makeLibraryPath [
+      pkgs.stdenv.cc.cc.lib
+      pkgs.zlib
+      pkgs.cudaPackages.cudatoolkit
+    ];
 };
 
 # the following is required by some apps, namely vscode-claude-extension
