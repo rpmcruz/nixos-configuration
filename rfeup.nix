@@ -12,6 +12,7 @@ hardware.nvidia = {
 };
 hardware.graphics.enable = true;
 
+/*
 users.users.miguel = {
   isNormalUser = true;
   packages = with pkgs; [
@@ -96,6 +97,7 @@ home-manager.users.rpcruz = {
     };
   };
 };
+*/
 
 /*
 users.users.claw = {
