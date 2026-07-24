@@ -192,11 +192,15 @@ in {
   };
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = [
-      pkgs.vscode-extensions.anthropic.claude-code
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      ms-vscode-remote.remote-ssh ms-vscode.remote-explorer
+      ms-python.python ms-python.debugpy ms-python.vscode-pylance ms-python.vscode-python-envs
+      james-yu.latex-workshop
+      anthropic.claude-code
     ];
   };
   home.file.".config/Code/User/settings.json".text = builtins.toJSON {
+    "editor.wordWrap" = true;
     "editor.minimap.enabled" = false;
     "chat.commandCenter.enabled" = false;
     "claudeCode.preferredLocation" = "panel";
