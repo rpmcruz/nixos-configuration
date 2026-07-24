@@ -165,6 +165,24 @@ let forge = pkgs.gnomeExtensions.forge.overrideAttrs (old: {
       --replace-fail '"49"]' '"49", "50"]'
     '';
   });
+# not in nixpkgs' gnomeExtensions set, so package it straight from the repo
+claude-code-usage = pkgs.stdenv.mkDerivation (finalAttrs: {
+  pname = "gnome-shell-extension-claude-code-usage";
+  version = "9";  # repo has no release tags; = metadata.json version
+  src = pkgs.fetchFromGitHub {
+    owner = "dvdstelt"; repo = "ClaudeCodeUsage";
+    rev = "ae3dd35e07621ad16403b3cbb9db5b5a5dd0c6ac";
+    hash = "sha256-AggygpN35ozwfx8tBMwurZRZRN+1VXkoeoqtYHctw3Q=";
+  };
+  sourceRoot = "${finalAttrs.src.name}/src";  # extension lives under src/
+  nativeBuildInputs = [ pkgs.glib ];  # glib-compile-schemas
+  passthru.extensionUuid = "claude-usage@dvdstelt.github.io";
+  buildPhase = "glib-compile-schemas --strict schemas";
+  installPhase = ''
+    mkdir -p $out/share/gnome-shell/extensions
+    cp -r . $out/share/gnome-shell/extensions/${finalAttrs.passthru.extensionUuid}
+  '';
+});
 in {
   home.stateVersion = "25.11";
   nixpkgs.config.allowUnfree = true;
@@ -211,6 +229,7 @@ in {
     dash-to-panel
     clipboard-indicator
     appindicator
+    claude-code-usage
   ];
   dconf = {
     settings = {
@@ -221,6 +240,7 @@ in {
           dash-to-panel.extensionUuid
           clipboard-indicator.extensionUuid
           appindicator.extensionUuid
+          claude-code-usage.extensionUuid
         ];
         favorite-apps = ["google-chrome.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "code.desktop"];
       };
